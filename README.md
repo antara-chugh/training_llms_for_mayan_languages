@@ -117,7 +117,6 @@ Large-scale multilingual pretraining can substantially improve performance when 
 
 Models were continuously pre-trained (CPT) on this broader Mayan corpus, then evaluated for perplexity on a held-out Q'anjob'al test set. Decreased perplexity indicates the model became more confident in predicting Q'anjob'al text, even before task-specific fine-tuning.
 
-Pretraining script: [`training/pretraining_on_mayan_texts.py`](training/pretraining_on_mayan_texts.py)
 
 *CPT, Perplexity Results*
 
@@ -141,7 +140,7 @@ This experiment tested whether stacking multiple multilingual sub-tasks onto Lla
 
 Across all three, BLEU and chrF stayed low (0.02–0.05 — well below the 3.65 BLEU from Q'anjob'al-only SFT), and the structured-prompting variant's perplexity diverged to infinity, signaling training instability rather than improved language modeling. The takeaway: stacking multiple translation sub-tasks appears to cause overfitting and degrade actual Q'anjob'al performance versus simpler, single-task fine-tuning, perhaps because a small model like Llama-3 1b has limited capacity to absorb multiple multilingual objectives at once without sufficient data to support them.
 
-Scripts: [`training/multi_stage_finetuning/`](training/multi_stage_finetuning/)
+
 
 *Too Many Multilingual Tasks → Overfitting, Degraded Performance*
 
@@ -169,8 +168,6 @@ Adding the classification objective raised classification accuracy from 0% to 61
 | 1.0896 | 15.2068 |
 
 **Takeaway:** unlike stacking multiple translation objectives (which actively degraded performance), the classification subtask mitigates, but does not eliminate, the instability seen elsewhere in the curriculum experiments. It helped the model build useful cross-lingual structure without collapsing training, but still fell short of focused, single-task Q'anjob'al fine-tuning. This shows added curriculum complexity doesn't reliably improve low-resource performance at this model scale, however, larger models may have greater capability to absorb multiple multilingual objectives at once and generalize across tasks. 
-
-Scripts: [`training/classification_based_curriculum_learning/`](training/classification_based_curriculum_learning/)
 
 ## Limitations
 
