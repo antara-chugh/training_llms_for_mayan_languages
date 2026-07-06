@@ -45,6 +45,8 @@ Processed training data is stored as JSONL, one example per line:
 ```json
 {"mayan": "Waytzebʼil kʼal chi yun naq unin", "english": "The child is always sleepy", "lang_code": "kjb"}
 ```
+Data split: 90% train; 10% test
+
 ## References 
 - Sam Noble Museum. (2018). *Mayan Languages*. University of Oklahoma. https://samnoblemuseum.ou.edu/collections-and-research/ethnology/mayan-textiles/mayan-textiles-background/mayan-languages/
 - [MayanV corpus](https://github.com/transducens/mayanv) — Curated Datasets and Neural Models for Machine Translation of Informal Registers between Mayan and Spanish Vernaculars. https://arxiv.org/pdf/2404.07673
