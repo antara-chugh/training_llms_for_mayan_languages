@@ -24,9 +24,30 @@ To the best knowledge, no open source large language model has explicitly been t
 | **Gemma-3 4b** | **English-Q'anjob'al only** | **0.0022, 4.2506** |
 | **Llama-3 1b** | **English-Q'anjob'al** | **0.0027, 3.0856** |
 
-### Hyperparamters 
+### Hyperparameters
 
-Epochs: 5, Max_Len=512, Batch size 4, Learning Rate 2e-4
+Hyperparameters found via grid search
+For all SFT/LoRA training runs:
+
+```python
+lora_cfg = LoraConfig(
+    task_type=TaskType.CAUSAL_LM,
+    r=16,
+    lora_alpha=32,
+    lora_dropout=0.05,
+    target_modules=["q_proj", "k_proj", "v_proj", "o_proj",
+                     "gate_proj", "up_proj", "down_proj"],
+    bias="none",
+)
+
+EPOCHS = 5
+MAX_LEN = 512
+BATCH = 4
+GRAD_ACCUM = 4
+LR = 2e-4
+```
+
+---
 ### Supervised Finetuning
 
 To start, models were fine-tuned using Structured Fine-Tuning (SFT) on the task "Translate this text from English to Q'anjob'al," using the Q'anjob'al text as the golden (target) response.
@@ -76,7 +97,7 @@ The pretrained models were trained on the SFT translation task, outperforming SF
 
 ### Knowledge Injection In Prompts and Multistage Finetuning
 
-Next, I tested whether stacking multiple multilingual sub-tasks onto Llama-3 1b, on top of the already-limited Q'anjob'al data, would help or hurt translation quality. Three variants were compared: fine-tuning on generic Mayan translation before Q'anjob'al, adding a structured language-family/branch prompt to explicitly encode linguistic relationships, and running the same two-stage sequence on a model that had already been continuously pre-trained on Mayan text. Across all three, BLEU and chrF stayed low (0.02–0.05, well below the 3.65 BLEU achieved by Q'anjob'al-only SFT), and the structured-prompting variant's perplexity diverged to infinity — a sign of training instability rather than improved language modeling. The takeaway is that  the extra sub-tasks appear to have caused overfitting and degraded the model's actual Q'anjob'al performance compared to simpler, single-task fine-tuning, perhaps because a small model like Llama-3 1b has limited capacity to absorb multiple multilingual objectives at once without data to support them: rather than transferring generalizable structure.
+Next, I tested whether stacking multiple multilingual sub-tasks onto Llama-3 1b, on top of the already-limited Q'anjob'al data, would help or hurt translation quality. Three variants were compared: fine-tuning on generic Mayan translation before Q'anjob'al, adding a structured language-family/branch prompt to explicitly encode linguistic relationships, and running the same two-stage sequence on a model that had already been continuously pre-trained on Mayan text. Across all three, BLEU and chrF stayed low (0.02–0.05, well below the 3.65 BLEU achieved by Q'anjob'al-only SFT), and the structured-prompting variant's perplexity diverged to infinity — a sign of training instability rather than improved language modeling. The takeaway is that  the extra sub-tasks appear to have caused overfitting and degraded the model's actual Q'anjob'al performance compared to simpler, single-task fine-tuning, perhaps because a small model like Llama-3 1b has limited capacity to absorb multiple multilingual objectives at once without data to support them.
 
 Scripts can be found under the `multi_stage_finetuning` folder.
 

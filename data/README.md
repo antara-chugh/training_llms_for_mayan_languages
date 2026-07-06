@@ -59,6 +59,7 @@ Data split: 90% train; 10% test
 - Mateo Pedro, P. *The Acquisition of Inflection in Q'anjob'al Maya*. Northeastern University Repository. https://repository.library.northeastern.edu/files/neu:1001741
 - Bloom Library. (n.d.). *Q'anjob'al Language Collection*. SIL International. https://bloomlibrary.org/language:kjb
 - Ministerio de Educación de Guatemala (MINEDUC). (n.d.). *Guatemala Ministry of Education Bookshelf*. Bloom Library, in partnership with USAID, Juárez & Associates, and SIL LEAD. https://bloomlibrary.org/Guatemala-MOE
+- Tiedemann, J., & Thottingal, S. (2020). OPUS-MT — Building Open Translation Services for the World. *Proceedings of the 22nd Annual Conference of the European Association for Machine Translation (EAMT 2020)*. Model used: `Helsinki-NLP/opus-mt-es-en`. https://huggingface.co/Helsinki-NLP/opus-mt-es-en
 
 
 
